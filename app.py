@@ -136,22 +136,21 @@ def boxplot1(cat_col, num_col):
 #selecting categorical column to be plotted against MRP
 box = st.selectbox("Select columns to have boxplot against MRP:", df.columns[4:])
 boxplot1(box, 'MRP') 
-st.write("From the boxplots it can be noticed that MRP changes for different Processors, Storage Capacities, RAM, Warranty given, Brand and Operating System.")
+st.write("From the boxplots it can be noticed that MRP changes for different Processors, Storage Capacities, RAM, Warranty given,  and Operating System.")
 st.write("So we need to include this categorical column in the Machine learning model to predict price of Laptop")
 st.write("Now we split the data into training and testing sets and build ML models to predict laptop price")
 
-X, y = df[['Processor', 'RAM', 'Operating System', 'Storage', 'Brand', 'Warranty']], df['MRP'] 
+X, y = df[['Processor', 'RAM', 'Operating System', 'Storage', 'Warranty']], df['MRP'] 
 #transfoming data using label encoder 
 le = LabelEncoder()
 X['process_encode']= le.fit_transform(X['Processor'])
 X['ram_encode']= le.fit_transform(X['RAM']) 
 X['os_encode']= le.fit_transform(X['Operating System'])
 X['storage_encode']= le.fit_transform(X['Storage'])
-X['brand_encode'] = le.fit_transform(X['Brand'])
 X['warr_encode'] = le.fit_transform(X['Warranty'])
 
 #splitting the data into 80% training and 20% testing dataset
-trainX, testX, trainY, testY = train_test_split(X.iloc[:,6:], y, test_size= 0.2, random_state=42) 
+trainX, testX, trainY, testY = train_test_split(X.iloc[:,5:], y, test_size= 0.2, random_state=42) 
 
 #fitting Linear regrression model
 st.write("Using :red[Linear regressor] model")
@@ -235,9 +234,6 @@ ram = X.loc[X['RAM'] == ram, 'ram_encode'].iloc[0]
 #select operting system of laptop
 operating_system = st.selectbox('Operating System', df['Operating System'].unique())
 operating_system = X.loc[X['Operating System'] == operating_system, 'os_encode'].iloc[0]
-#select brand of laptop
-brand = st.selectbox('Brand', df['Brand'].unique())
-brand = X.loc[X['Brand'] == brand, 'brand_encode'].iloc[0]
 #select warranty given to laptop
 warranty = st.selectbox('Warranty', df['Warranty'].unique())
 warranty = X.loc[X['Warranty'] == warranty, 'warr_encode'].iloc[0]
@@ -246,8 +242,7 @@ storage = st.selectbox('Storage', df['Storage'].unique())
 storage = X.loc[X['Storage'] == storage, 'storage_encode'].iloc[0]
 
 #putting all the new featues in a list
-features = {'Processor': processor, 'RAM': ram, 'Operating System':operating_system, 
-            'Storage': storage,'Brand': brand, 'Warranty': warranty}
+features = {'Processor': processor, 'RAM': ram, 'Operating System':operating_system,'Storage': storage,'Warranty': warranty}
 
 #select model for price prediction
 models = ['Linear Regression', 'Gradient Boosting', 'Tuned Gradient Boosting Model']
