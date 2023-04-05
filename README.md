@@ -1,0 +1,3 @@
+# laptop price prediction 
+Data has been webscrapped initially from flipkart website and using RegEx operations features that are important in laptop price prediction are extracted. Then necessary data analysis is performed. 
+Later Linear Regression model is built, however this was not explaining the data well, so we then use boosting algorithm to train the model i.e., Gradient Boosting Regressor. This model has produced far better results than Linear model, but still there is scope to improve the model by tuning hyperparameters. After tuning hyperparameters, the model has improved very little thatn initial Gradient boosting model. 
